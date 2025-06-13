@@ -1,0 +1,773 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holding  Hand Hospitality</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial',sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #00809D 0%, #FF7601 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: #FCECDD(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #070f1a;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+
+        .logo::before {
+            content: "🏥";
+            font-size: 2.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #010a16;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Services Section */
+        .services {
+            background: white;
+            padding: 4rem 0;
+            margin: 2rem 0;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .services h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #4a5568;
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .service-card {
+            background: linear-gradient(135deg, #f8f9ff 0%, #e8f2ff 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border-color: #667eea;
+        }
+
+        .service-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #4a5568;
+        }
+
+        .service-card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .service-button:hover {
+            background: #5a67d8;
+            transform: scale(1.05);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #4a5568;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Features Section */
+        .features {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 4rem 0;
+            margin: 2rem 0;
+            border-radius: 20px;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #4a5568;
+        }
+
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: #f8f9ff;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: scale(1.05);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            width: 60px;
+            text-align: center;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+
+            .service-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        
+   /* Logo inside the nav bar */
+.nav-logo {
+  height: 250px;          /* Keeps your chosen size */
+  width:  250px;          /* Maintain aspect ratio */
+  
+  /* —––– Visual polish –––– */
+  display: inline-block; /* Ensures padding & bg show up */
+  padding: 4px;          /* Space between image edge & bg */
+  background-color: #ffffff;       /* Change to any hex/RGB */
+  border-radius: 8px;              /* Rounded corners (optional) */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Soft shadow */
+  margin-left: 43%;
+  margin-top: 10%;
+  
+  
+  /* Optional hover effect (nice touch) */
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+.nav-logo:hover {
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+  transform: translateY(-2px);
+}
+
+
+.l-name{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+
+
+
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <div class="logo">
+                <div class="l-name">
+                    HOLD
+                </div>
+                
+            </div>
+            
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            
+        </nav>
+    </header>
+
+        <div><img class="nav-logo" src="./image/WhatsApp Image 2025-06-12 at 21.35.48_75cda88a.jpg" alt="image"></div> 
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Healthcare Made Simple for Seniors</h1>
+            <p>Complete hospital services at your fingertips - Token booking, Transportation, and Medicine delivery</p>
+            <button class="cta-button" onclick="scrollToServices()">Get Started Today</button>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services container " id="services" style='margin-left: 15%;'>
+        <h2>Our Services</h2>
+        <div class="service-grid" style='margin-left: 1%;' >
+            <!-- Token Booking Service -->
+            <div class="service-card">
+                <span class="service-icon">🎫</span>
+                <h3>Hospital Token Booking</h3>
+                <p>Skip the queues! Book your hospital appointment tokens online and get priority service. No more waiting in long lines.</p>
+                <button class="service-button" onclick="openModal('tokenModal')">Book Token Now</button>
+            </div>
+
+            <!-- Transportation Service -->
+            <div class="service-card">
+                <span class="service-icon">🚗</span>
+                <h3>Pickup & Drop Service</h3>
+                <p>Safe and comfortable transportation to and from the hospital with trained drivers who understand senior care needs.</p>
+                <button class="service-button" onclick="openModal('transportModal')">Book Ride</button>
+            </div>
+
+            <!-- Medicine Delivery Service -->
+            <div class="service-card" style='margin-right: 2%;'  >
+                <span class="service-icon">💊</span>
+                <h3>Medicine Home Delivery</h3>
+                <p>Get your prescribed medicines delivered directly to your doorstep. Fast, reliable, and handled with care.</p>
+                <button class="service-button" onclick="openModal('medicineModal')">Order Medicine</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features container" id="features" style='margin-left: 15%;'>
+        <h2>Why Choose ElderCare+?</h2>
+        <div class="feature-list">
+            <div class="feature-item">
+                <span class="feature-icon">👥</span>
+                <div>
+                    <h4>Senior-Focused Care</h4>
+                    <p>Services designed specifically for elderly patients</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">⏰</span>
+                <div>
+                    <h4>24/7 Availability</h4>
+                    <p>Round-the-clock support when you need it most</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">🔒</span>
+                <div>
+                    <h4>Safe & Secure</h4>
+                    <p>Trained professionals and secure payment methods</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">📱</span>
+                <div>
+                    <h4>Easy to Use</h4>
+                    <p>Simple interface designed for seniors</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Token Booking Modal -->
+    <div id="tokenModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('tokenModal')">&times;</span>
+            <h2>Book Hospital Token</h2>
+            <form id="tokenForm">
+                <div class="form-group">
+                    <label for="patientName">Patient Name:</label>
+                    <input type="text" id="patientName" name="patientName" required>
+                </div>
+                <div class="form-group">
+                    <label for="department">Department:</label>
+                    <select id="department" name="department" required>
+                        <option value="">Select Department</option>
+                        <option value="cardiology">Cardiology</option>
+                        <option value="orthopedics">Orthopedics</option>
+                        <option value="general">General Medicine</option>
+                        <option value="neurology">Neurology</option>
+                        <option value="diabetes">Diabetes Care</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="preferredDate">Preferred Date:</label>
+                    <input type="date" id="preferredDate" name="preferredDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="timeSlot">Preferred Time:</label>
+                    <select id="timeSlot" name="timeSlot" required>
+                        <option value="">Select Time</option>
+                        <option value="morning">Morning (9:00 AM - 12:00 PM)</option>
+                        <option value="afternoon">Afternoon (2:00 PM - 5:00 PM)</option>
+                        <option value="evening">Evening (6:00 PM - 8:00 PM)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number:</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <button type="submit" class="submit-btn">Book Token</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Transportation Modal -->
+    <div id="transportModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('transportModal')">&times;</span>
+            <h2>Book Transportation</h2>
+            <form id="transportForm">
+                <div class="form-group">
+                    <label for="pickupAddress">Pickup Address:</label>
+                    <textarea id="pickupAddress" name="pickupAddress" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="destination">Destination Hospital:</label>
+                    <select id="destination" name="destination" required>
+                        <option value="">Select Hospital</option>
+                        <option value="general">City General Hospital</option>
+                        <option value="heart">Heart Care Center</option>
+                        <option value="multispecialty">Multispecialty Hospital</option>
+                        <option value="senior">Senior Care Medical Center</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="rideDate">Date:</label>
+                    <input type="date" id="rideDate" name="rideDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="rideTime">Time:</label>
+                    <input type="time" id="rideTime" name="rideTime" required>
+                </div>
+                <div class="form-group">
+                    <label for="returnTrip">Return Trip:</label>
+                    <select id="returnTrip" name="returnTrip">
+                        <option value="yes">Yes, book return trip</option>
+                        <option value="no">No, one way only</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="contactPhone">Contact Number:</label>
+                    <input type="tel" id="contactPhone" name="contactPhone" required>
+                </div>
+                <button type="submit" class="submit-btn">Book Ride</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Medicine Delivery Modal -->
+    <div id="medicineModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('medicineModal')">&times;</span>
+            <h2>Medicine Home Delivery</h2>
+            <form id="medicineForm">
+                <div class="form-group">
+                    <label for="patientNameMed">Patient Name:</label>
+                    <input type="text" id="patientNameMed" name="patientNameMed" required>
+                </div>
+                <div class="form-group">
+                    <label for="prescriptionType">Order Type:</label>
+                    <select id="prescriptionType" name="prescriptionType" required>
+                        <option value="">Select Type</option>
+                        <option value="prescription">Upload Prescription</option>
+                        <option value="repeat">Repeat Previous Order</option>
+                        <option value="chronic">Chronic Care Package</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="deliveryAddress">Delivery Address:</label>
+                    <textarea id="deliveryAddress" name="deliveryAddress" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="deliveryTime">Preferred Delivery Time:</label>
+                    <select id="deliveryTime" name="deliveryTime" required>
+                        <option value="">Select Time</option>
+                        <option value="morning">Morning (9:00 AM - 12:00 PM)</option>
+                        <option value="afternoon">Afternoon (2:00 PM - 5:00 PM)</option>
+                        <option value="evening">Evening (6:00 PM - 8:00 PM)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="emergencyDelivery">Emergency Delivery:</label>
+                    <select id="emergencyDelivery" name="emergencyDelivery">
+                        <option value="no">Regular Delivery (24 hours)</option>
+                        <option value="yes">Emergency Delivery (2-4 hours)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="medPhone">Contact Number:</label>
+                    <input type="tel" id="medPhone" name="medPhone" required>
+                </div>
+                <button type="submit" class="submit-btn">Order Medicine</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <p>&copy; 2025 ElderCare+ Hospital Services. Caring for seniors with dignity and compassion.</p>
+            <p>24/7 Helpline: 1800-ELDER-CARE | Email: help@eldercare.com</p>
+        </div>
+    </footer>
+
+    <script>
+        // Set minimum date to today for all date inputs
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('preferredDate').min = today;
+        document.getElementById('rideDate').min = today;
+
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modals = document.getElementsByClassName('modal');
+            for (let modal of modals) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            }
+        }
+
+        // Form submissions
+        document.getElementById('tokenForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            showConfirmation('Token booked successfully! You will receive a confirmation SMS shortly.');
+            closeModal('tokenModal');
+            this.reset();
+        });
+
+        document.getElementById('transportForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            showConfirmation('Transportation booked successfully! Your driver will contact you 30 minutes before pickup.');
+            closeModal('transportModal');
+            this.reset();
+        });
+
+        document.getElementById('medicineForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            showConfirmation('Medicine order placed successfully! Your medicines will be delivered as scheduled.');
+            closeModal('medicineModal');
+            this.reset();
+        });
+
+        // Smooth scrolling
+        function scrollToServices() {
+            document.getElementById('services').scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+
+        // Confirmation message
+        function showConfirmation(message) {
+            const confirmation = document.createElement('div');
+            confirmation.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(45deg, #4caf50, #45a049);
+                color: white;
+                padding: 1rem 2rem;
+                border-radius: 10px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                z-index: 3000;
+                animation: slideInRight 0.5s ease;
+            `;
+            confirmation.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span style="font-size: 1.5rem;">✅</span>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            document.body.appendChild(confirmation);
+            
+            setTimeout(() => {
+                confirmation.style.animation = 'slideOutRight 0.5s ease';
+                setTimeout(() => {
+                    document.body.removeChild(confirmation);
+                }, 500);
+            }, 3000);
+        }
+
+        // Add slide animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInRight {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOutRight {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease forwards';
+                }
+            });
+        }, observerOptions);
+
+        // Observe service cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const serviceCards = document.querySelectorAll('.service-card');
+            const featureItems = document.querySelectorAll('.feature-item');
+            
+            serviceCards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                observer.observe(card);
+            });
+
+            featureItems.forEach(item => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(30px)';
+                observer.observe(item);
+            });
+        });
+    </script>
+</body>
+</html>
